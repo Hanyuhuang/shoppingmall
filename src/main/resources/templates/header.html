@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
+</script>
+<title></title>
+</head>
+<body>
+	<div class="top" th:fragment="top">
+		<div class="top_text">
+			<div th:if="${session.user}==null">
+				<a href="gotoLogin">用户登录:<span id="show_name" style="color:red"></span></a>
+				<a href="gotoRegister">用户注册</a>
+			</div>
+			<div th:if="${session.user}!=null">
+				<a href="gotoLogout">退出</a>
+				<a href="">用户订单</a>
+				<a href="" th:text="'用户名称:'+${session.user.username}"></a>
+		    </div>
+		</div>
+	</div>
+</body>
+</html>

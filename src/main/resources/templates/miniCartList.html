@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>硅谷商城</title>
+</head>
+<body>
+    <div th:fragment="cartList" >
+		<div th:if="${session.user==null}"  class="gobottom" style="text-align: center">
+			<span style="font-size: 15px;color: #666666;font-weight: bold">你还没有登录，请登录后查看</span>
+		</div>
+		<div th:if="${session.user!=null}" >
+			<p style="font-size: 15px;color: #666666;font-weight: bold">最近加入的商品</p>
+			<div th:each="cart:${cartList}">
+				<div class="one">
+					<img th:src="@{'/upload/image/'+${cart.productPic}}" width="80px;" height="60px"/>
+					<span class="one_name" th:text="${cart.skuName}"></span>
+					<span class="one_prece">
+					<b th:text="'*'+${cart.number}"></b>
+					<b th:text="'￥'+${cart.unitPrice}"></b><br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					</span>
+				</div>
+			</div>
+			<div class="gobottom">
+				<div th:if="${cartList!=null}" style="text-align: center">
+					<span id="total" th:text="'共'+${total}+'件商品 点击查看更多'" style="font-size: 15px;color: #666666;font-weight: bold" ></span>
+				</div>
+				<div th:if="${cartList==null}" style="text-align: center">
+					<span style="font-size: 15px;color: #666666;font-weight: bold">你的购物车空空如也~</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>拼东东商城</title>
+</head>
+<body>
+<div th:fragment="cartListInner">
+	<div class="Cbox">
+		<table class="table table-striped table-bordered table-hover">
+		   <thead>
+		     <tr>
+                 <th></th>
+		       <th>商品图片</th>
+		       <th>商品名称</th>
+		       <th>商品属性</th>
+		       <th>商品价格</th>
+		       <th>商品数量</th>
+		       <th>操作</th>
+		     </tr>
+		   </thead>
+		   <tbody>
+			     <tr th:each="cart,status:${cartList}">
+                   <td style="vertical-align:middle;"><input th:onclick="'changeStatus(this.checked,'+${cart.skuId}+','+${pageNow}+')'" type="checkbox" th:checked="${cart.status eq '1'?'true':'false'}" /></td>
+			       <td style="vertical-align:middle;"><img th:src="@{'/upload/image/'+${cart.productPic}}" alt="" width="80px" height="60px"></td>
+			       <td style="vertical-align:middle;" th:text="${cart.skuName}"></td>
+			       <td style="vertical-align:middle;">
+			       		颜色：<span style='color:#ccc'>白色</span><br>
+			       		尺码：<span style='color:#ccc'>L</span>
+			       </td>
+			       <td style="vertical-align:middle;" th:text="${cart.unitPrice}"></td>
+			       <td style="vertical-align:middle;"><input th:id="'num_'+${status.index}" type="number" name="number" min="1" th:value="${cart.number}" th:onchange="'updateCart('+${status.index}+','+${cart.skuId}+','+${cart.unitPrice}+','+${pageNow}+')'" style="width:50px;text-align:center"></td>
+			       <td style="vertical-align:middle;"><a th:href="'deleteCart?skuId='+${cart.skuId}+'&pageNow='+${pageNow}">删除</a></td>
+			     </tr>
+		   </tbody>
+	 	</table>
+		<ul class="pagination pagination-lg justify-content-center">
+			<li class="page-item"><a class="page-link" th:onclick="'lastPage('+${pageNow}+')'">&laquo;</a></li>
+			<li th:id="'page'+${pageNow}" th:each="pageNow:${#numbers.sequence(1,pageCount)}" class="page-item">
+				<a  class="page-link" th:href="'listCart?pageNow='+${pageNow}" th:text="${pageNow}"></a>
+			</li>
+			<li class="page-item"><a class="page-link" th:onclick="'nextPage('+${pageNow}+','+${pageCount}+')'">&raquo;</a></li>
+		</ul><br>
+	</div>
+	<div class="Cprice">
+	    <form id="check" action="gotoCheckOrder">
+			<div class="price"><p th:text="'总价：'+${sum}"></div>
+			<div class="jiesuan" th:onclick="'check('+${sum}+')'">结算</div>
+		</form>
+	</div>
+</div>
+</body>
+</html>

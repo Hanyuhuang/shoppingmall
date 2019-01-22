@@ -1,0 +1,24 @@
+server:
+  servlet:
+        context-path: /shoppingmall/
+
+spring:
+  datasource:
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/t_mall?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=true
+        username: root
+        password: 980709
+  thymeleaf:
+        cache: false
+        resources:
+           static-locations: classpath:static/
+
+mybatis:
+  mapper-locations: classpath:static/mapper/*.xml
+  type-aliases-package: com.hyh.shoppingmall.entity
+  configuration:
+        map-underscore-to-camel-case: true
+
+logging:
+  level:
+       com.hyh.shoppingmall.mapper: debug

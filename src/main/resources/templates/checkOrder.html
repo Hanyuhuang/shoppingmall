@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<script type="text/javascript" th:src="@{/js/jquery-1.7.2.min.js}"></script>
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/css.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>订单支付</title>
+</head>
+<body>
+<div th:include="header::top"></div>
+<div class="top_img">
+	<img th:src="@{/images/top_img.jpg}" alt="">
+</div>
+<div th:include="searchArea::search"></div>
+
+	<div class="message">
+			<div class="msg_title">
+				收货人信息
+			</div>
+			<form action="saveOrder" id="order_form">
+				<div th:each="address:${addressList}">
+					<div class="msg_addr">
+						<input  type="radio" name="id" th:value="${address.id}" th:onclick="'showAddress('+${address.id}+')'" >
+						<span th:id="'recipient_'+${address.id}" class="msg_left" th:text="${address.recipient} "></span>
+						<span th:id="'address_'+${address.id}" class="msg_right" th:text="${address.name}"></span>
+					</div>
+				</div>
+			</form>
+			<a class="addrs" href="listAddress" target="_blank">管理我的地址</a>
+			<div class="msg_line"></div>
+			<div class="msg_title">
+				送货清单
+			</div>
+			<div th:each="cart,status:${cartList}" >
+					<div style="margin-top:20px;">
+					<div class="msg_list">
+						<div class="msg_list_left">
+							<div th:if="${status.index==0}">
+								配送方式：
+								<div class="left_title">
+                                    <p >拼东东快递</p>
+								</div>
+							</div>
+						</div>
+						<div class="msg_list_right">
+							<div class="msg_img">
+								<img width="80px"  height="80px" th:src="@{'/upload/image/'+${cart.productPic}}"/>
+							</div>
+							<div class="msg_name">
+								<p th:text="${cart.skuName}"></p>
+							</div>
+							<div class="msg_price">
+								<p th:text="${'￥'+cart.unitPrice}"></p>
+							</div>
+							<div class="msg_mon">
+								<p th:text="${'*'+cart.number}"></p>
+							</div>
+							<div class="msg_state">
+								<p>有货</p>
+							</div>
+						</div>
+					</div>
+					</div>
+			</div>
+			<div class="msg_line"></div>
+			<div class="msg_sub">
+				<div class="msg_sub_tit">
+					应付金额：
+					<b th:text="'￥'+${sum}"></b>
+				</div>
+				<div class="msg_sub_adds">
+					寄送至 ： <span id="showAddress"></span><br>
+					收货人 ： <span id="showRecipient"></span>
+				</div>
+				<button class="msg_btn" style="cursor:pointer;" onclick="order_submit()">提交订单</button>
+			</div>
+		</div>
+<div class="footer">
+	<div class="top"></div>
+	<div class="bottom"><img th:src="@{/images/foot.jpg}" alt=""></div>
+</div>
+<script type="text/javascript">
+
+    function order_submit(){
+        if($("#showAddress").text()==''|| $("#showRecipient").text()==''){
+            alert("请选择收货地址");
+        }else {
+            $("#order_form").submit();
+        }
+    }
+
+    function showAddress(id){
+        var address = $('#address_'+id).text();
+        var recipient = $('#recipient_'+id).text();
+        $("#showAddress").html(address);
+        $("#showRecipient").html(recipient);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hyh.shoppingmall.mapper.AttrMapper">
+	<select id="listAttr" parameterType="int"
+		resultMap="listAttr">
+		select attr.id as attr_id ,attr.*,val.id as val_id ,val.name as val_name,val.*
+		from attr attr ,
+		value val where
+		attr.id = val.attr_id
+		and
+		attr.class2 = #{class2}
+	</select>
+
+	<resultMap type="AttrVO" id="listAttr"
+		autoMapping="true">
+		<id column="attr_id" property="id" />
+		<collection property="valueList" ofType="Value"
+			autoMapping="true">
+			<id column="val_id" property="id" />
+			<result column="val_name" property="name"/>
+		</collection>
+	</resultMap>
+
+</mapper>

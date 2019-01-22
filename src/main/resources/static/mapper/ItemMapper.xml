@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hyh.shoppingmall.mapper.ItemMapper">
+
+	<select id="listSku" parameterType="int" resultType="Sku">
+		select * from sku where product_id = #{productId}
+	</select>
+
+	<select id="getSku" parameterType="int" resultMap="getSku">
+		SELECT
+		sku.id as sku_id,
+		spu.id as spu_id,
+		img.id as img_id,
+		attr.id as attr_id,
+		val.id as val_id,
+		sku.name as sku_name,
+		spu.name as spu_name,
+		attr.name as attr_name,
+		val.name as val_name,
+		sku.*,spu.*,img.*,attr.*,val.*
+		FROM
+		sku sku,
+		product spu,
+		product_image img,
+		attr attr,
+		value val,
+		sku_attribute_value av
+		WHERE
+		sku.product_id = spu.id
+		AND spu.id =
+		img.product_id
+		AND sku.id = av.sku_id
+		AND av.attr_id = attr.id
+		AND
+		av.value_id = val.id
+		and sku.id = #{id}
+
+	</select>
+
+
+	<resultMap autoMapping="true" type="SkuVO" id="getSku">
+		<id column="sku_id" property="id" />
+		<result column="sku_name" property="name"/>
+		<association property="spu" javaType="Product" autoMapping="true">
+			<id column="spu_id" property="id" />
+			<result column="spu_name" property="name"/>
+		</association>
+		<collection property="imageList" ofType="ProductImage" autoMapping="true">
+			<id column="img_id" property="id" />
+		</collection>
+		<collection property="attrList" ofType="AttrValue" autoMapping="true">
+			<association property="attr" javaType="Attr" autoMapping="true">
+				<id column="attr_id" property="id"/>
+				<result column="attr_name" property="name"/>
+			</association>
+			<association property="value" javaType="Value" autoMapping="true">
+				<id column="val_id" property="id"/>
+				<result column="val_name" property="name"/>
+			</association>
+		</collection>
+	</resultMap>
+</mapper>

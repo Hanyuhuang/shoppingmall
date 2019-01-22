@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<script type="text/javascript" th:src="@{/js/jquery-1.7.2.min.js}"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+	<meta charset="UTF-8">
+	<title>支付成功</title>
+	<script type="text/javascript">
+        onload = function() {
+            setInterval(go, 1000);
+        };
+        var x = 5; //利用了全局变量来执行
+        function go() {
+            x--;
+            if (x > 0) {
+                document.getElementById("time").innerHTML = x+'秒后返回主页面'; //每次设置的x的值都不一样了。
+            } else {
+                location.href = 'index';
+            }
+        }
+	</script>
+</head>
+<body style="text-align: center;margin-top: 180px">
+<img th:src="@{/images/success.png} " height="350px" width="350px">
+<h2 th:text="支付成功" class="text-success" ></h2><br>
+<span id="time" class="text-danger" style="font-size: 25px">5秒后返回主页面</span><br><br>
+<a href="index" class="btn btn-primary" style="font-size: 20px">继续购买</a>
+</body>
+</html>

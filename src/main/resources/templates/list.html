@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<script type="text/javascript" th:src="@{js/jquery-1.7.2.min.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{css/css.css}">
+<link rel="stylesheet" type="text/css" th:href="@{css/style.css}">
+<link rel="shortcut icon" type="image/icon" th:href="@{image/jd.ico}">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>拼东东商城</title>
+	<style>
+		.Active1{
+			color: #222222;
+		}
+		.Active2{
+			background:#FF9172;text-align: center;border: 2px solid #dfdfdf;height: 35px;width: 70px;
+		}
+		.Native1{
+			color: #9C9C9C;
+		}
+		.Native2{
+			background:#f9f9f9;text-align: center;border: 2px solid #dfdfdf;height: 35px;width: 70px;
+		}
+	</style>
+</head>
+<body>
+	<div th:include="header::top"></div>
+	<div class="top_img">
+		<img th:src="@{images/top_img.jpg}" >
+	</div>
+	<div th:include="searchArea::search"></div>
+	<div  id = "paramArea" th:include="attrList::attrList" style="padding-left: 150px"></div>
+	<hr>
+	<div id = "skuListInner" th:include="skuList::skuList" style="padding-left: 150px"/>
+</body>
+<script type="text/javascript">
+    function param(attrId,valueId){
+        $("#paramArea").append("<input name='param' type='hidden' value='{\"attrId\":"+attrId+",\"valueId\":"+valueId+"}'>");
+        // 调用ajax异步请求
+        getSku();
+    }
+
+    function getSku(){
+        // 获得参数
+         var attrJson = {};
+        $("#paramArea input[name='param']").each(function(i,data){
+            var json = $.parseJSON(data.value);
+            attrJson["attrList["+i+"].id"] = json.attrId;
+            attrJson["attrList["+i+"].valueList["+i+"].id"] = json.valueId;
+            attrJson["class2"]=[[${class2}]];
+        });
+        // 异步提交请求
+        // 刷新商品列表
+        $.post("getSku",attrJson,function(data){
+            $("#skuListInner").html(data);
+        })
+    }
+    function check(id) {
+		if($("#td"+id).hasClass("Native2")){
+            $("#td"+id).removeClass("Native2");
+            $("#td"+id).addClass("Active2");
+            $("#val"+id).removeClass("Native1");
+            $("#val"+id).addClass("Active1");
+		}else {
+            $("#td"+id).removeClass("Active2");
+            $("#td"+id).addClass("Native2");
+            $("#val"+id).removeClass("Active1");
+            $("#val"+id).addClass("Native1");
+		}
+    }
+</script>
+
+</html>

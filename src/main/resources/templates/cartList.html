@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/css.css}">
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<script type="text/javascript" th:src="@{/js/jquery-3.1.1.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
+    $(document).ready(function(){
+        var page = [[${pageNow}]];
+        $("#page"+page).addClass("active");
+	});
+	function changeStatus(checked,skuId,pageNow){
+		var status = "0";
+		if(checked){
+			status="1";
+		}
+		$.post("changeStatus",{skuId:skuId,status:status,pageNow:pageNow},function(data){
+			$("#cartListInner").html(data);
+		});
+	}
+    function check(sum){
+        if(sum>0){
+            $("#check").submit();
+        }else {
+            alert("你的购物车为空，请添加商品在结算!");
+            return false;
+        }
+    }
+    function updateCart(index,skuId,unitPrice,pageNow) {
+	    var num = $("#num_"+index).val();
+	    if(num>0){
+            var totalPrice = num * unitPrice;
+            $.get("updateCart",{skuId:skuId,number:num,totalPrice:totalPrice,pageNow:pageNow},function (data) {
+                $("#cartListInner").html(data);
+            })
+		}else {
+	        alert("商品个数不能小于1!");
+		}
+
+    }
+    function lastPage(pageNow) {
+        if(pageNow>1){
+            pageNow--;
+        }else {
+            pageNow = 1;
+        }
+        window.location.href='listCart?pageNow='+pageNow;
+    }
+    function nextPage(pageNow,pageCount) {
+        if(pageNow<pageCount){
+            pageNow++;
+        }else {
+            pageNow=pageCount;
+        }
+        window.location.href='listCart?pageNow='+pageNow;
+    }
+</script>
+<title>购物车</title>
+</head>
+<body>
+	<div th:include="header::top"></div>
+	<div class="top_img">
+		<img th:src="@{/images/top_img.jpg}" alt="">
+	</div>
+	<div th:include="searchArea::search"></div>
+	<div id="cartListInner">
+		<div th:include="cartListInner::cartListInner"></div>
+	</div>
+
+	<div class="footer">
+		<div class="top"></div>
+		<div class="bottom"><img src="images/foot.jpg" alt=""></div>
+	</div>
+</body>
+</html>

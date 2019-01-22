@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hyh.shoppingmall.mapper.AddressMapper">
+
+	<select id="listAddress" resultType="Address"
+		parameterType="User">
+		select * from address where user_id = #{id}
+	</select>
+
+	<select id="getAddress" parameterType="int"
+		resultType="Address">
+		select * from address where id = #{id}
+	</select>
+
+	<insert id="addAddress" parameterType="Address">
+		insert into address (recipient,user_id,tel,name) values (#{recipient},#{userId},#{tel},#{name})
+	</insert>
+
+	<delete id="deleteAddress" parameterType="Address">
+		delete from address where id = #{id}
+	</delete>
+
+	<update id="updateAddress" parameterType="Address">
+		update address set recipient=#{recipient},user_id=#{userId},tel=#{tel},name=#{name} where id=#{id}
+	</update>
+
+</mapper>

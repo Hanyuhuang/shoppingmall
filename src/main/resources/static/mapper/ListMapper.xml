@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hyh.shoppingmall.mapper.ListMapper">
+
+	<select id="getSku" parameterType="Map"
+		resultMap="listSku">
+		SELECT
+		spu.id as spu_id , spu.*,sku.id as sku_id ,sku.*
+		FROM
+		product spu,
+		sku sku
+		WHERE
+		spu.id =sku.product_id
+		and spu.class2 =#{class2}
+		${subSql}
+	</select>
+
+	<select id="listSku" parameterType="int" resultMap="listSku">
+		SELECT
+		spu.id as spu_id , spu.*,sku.id as sku_id ,sku.name as sku_name ,sku.*
+		FROM
+		product spu,
+		sku sku
+		WHERE
+		spu.id = sku.product_id
+		and spu.class2 =
+		#{class2}
+	</select>
+
+	<resultMap type="SkuVO" id="listSku"
+		autoMapping="true">
+		<id column="sku_id" property="id" />
+		<association property="spu" javaType="Product" autoMapping="true">
+		    <id column="spu_id" property="id" />
+			<result column="spu_name" property="name"/>
+	    </association>
+	</resultMap>
+
+</mapper>

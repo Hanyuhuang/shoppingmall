@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<script type="text/javascript" th:src="@{/js/jquery-1.7.2.min.js}"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+	<meta charset="UTF-8">
+	<title>添加成功</title>
+</head>
+<body style="text-align: center;margin-top: 180px">
+<img th:src="@{/images/success.png} " height="350px" width="350px">
+<h2 th:text="添加成功" class="text-success" ></h2><br>
+<a th:href="'skuDetail?id='+${id}" class="btn btn-primary" style="font-size: 20px">继续购买</a>
+<a href="listCart" class="btn btn-danger" style="font-size: 20px">前往购物车</a>
+
+</body>
+</html>

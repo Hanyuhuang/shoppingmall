@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
+	function b(){}
+</script>
+<title>硅谷商城</title>
+</head>
+<body>
+<div th:fragment="search">
+	<div class="search" >
+		<div class="logo"><img th:src="@{/images/logo.png}" alt=""></div>
+		<div class="search_on">
+			<div class="se">
+				<input type="text" name="search" class="lf" >
+				<input type="submit" class="clik" value="搜索" >
+			</div>
+			<div class="se">
+				<a href="">取暖神奇</a>
+				<a href="">1元秒杀</a>
+				<a href="">吹风机</a>
+				<a href="">玉兰油</a>
+			</div>
+		</div>
+		<div th:include="miniCart::cart"></div>
+	</div>
+
+</div>
+</body>
+</html>

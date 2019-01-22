@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
+	function b(){}
+</script>
+<title>硅谷商城</title>
+</head>
+<body>
+<div th:fragment="skuList">
+	<div th:each="sku:${skuList}">
+		<div style="margin-top:10px;margin-left:10px;float:left;border:1px red solid;width:250px;height:230px;text-align: center">
+			<img th:src="@{'/upload/image/'+${sku.spu.pic}}" width="150px" height="150px"><br>
+			<a th:href="'skuDetail?id='+${sku.id}+'&productId='+${sku.spu.id}" target="_blank" th:text="${sku.name}"></a><br>
+			<p th:text="${'￥'+sku.price}" />
+			<p th:text="'剩余'+${sku.number}+'件'" />
+		</div>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
+
+</script>
+<title>拼东东商城</title>
+</head>
+<body>
+	<div th:fragment="attrList">
+	<hr>
+		<table width="500" style="border-collapse:separate; border-spacing:10px 10px">
+			<tr th:each="attr:${attrList}">
+				<td th:text="${attr.name}" style="text-align:center;background:navajowhite"/>
+				<div th:each="val:${attr.valueList}" >
+					<td  class="Native2" th:id="'td'+${val.id}" th:onclick="'check('+${val.id}+')'" >
+						<p class="Native1" th:id="'val'+${val.id}" th:onclick="'javascript:param('+${attr.id}+','+${val.id}+')'" style="margin-top: 8px; cursor:pointer" th:text="${val.value+val.name}" ></p>
+					</td>
+				</div>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

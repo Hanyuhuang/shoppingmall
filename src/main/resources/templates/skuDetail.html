@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" type="text/css" th:href="@{/css/css.css}">
+<script type="text/javascript" th:src="@{/js/jquery-1.7.2.min.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
+	function cart_submit(){
+	    if($("#num").val()>0){
+            $("#cart_form").submit();
+		}else {
+	        alert("商品个数不能小于1!");
+		}
+	}
+
+</script>
+<title>拼东东商城</title>
+</head>
+<body>
+<div th:include="header::top"></div>
+<div class="top_img">
+	<img th:src="@{/images/top_img.jpg}" alt="">
+</div>
+	<div class="Dbox">
+		<div class="box">
+			<div class="left">
+				<div class="timg"><img th:src="@{/images/img_5.jpg}" alt=""></div>
+				<div class="timg2">
+					<div class="lf"><img th:src="@{/images/lf.jpg}" alt=""></div>
+					<div class="center">
+						<span><img th:src="@{/images/icon_2.jpg}" alt=""></span>
+						<span><img th:src="@{/images/icon_3.jpg}" alt=""></span>
+						<span><img th:src="@{/images/icon_2.jpg}" alt=""></span>
+						<span><img th:src="@{/images/icon_3.jpg}" alt=""></span>
+						<span><img th:src="@{/images/icon_2.jpg}" alt=""></span>
+					</div>
+					<div class="rg"><img th:src="@{/images/rg.jpg}" alt=""></div>
+				</div>
+				<div class="goods"><img th:src="@{/images/img_6.jpg}" alt=""></div>
+			</div>
+			<div class="cent">
+				<div class="title">
+					<p th:text="${skuVO.name}"></p>
+				</div>
+				<div class="bg">
+					<p th:text="${'市场价：￥'+skuVO.price}"></p>
+					<p th:text="${'促销价：￥'+skuVO.price}"></p>
+				</div>
+				<div class="clear">
+					<div class="min_t">选择版本: </div>
+					<div class="min_mx" th:each="sku:${skuList}">
+						<a th:href="'skuDetail?id='+${sku.id}+'&productId='+${sku.productId}" th:text="${sku.name}">}</a>
+					</div>
+				<div>
+				<div class="clear">
+					<div class="min_t" >服务：</div>
+					<div class="min_mx" >服务1号1</div>
+					<div class="min_mx" >服务二号1112</div>
+					<div class="min_mx" >55英服务二号1111寸活动中3</div>
+					<div class="min_mx" >4</div>
+					<div class="min_mx" >呃呃呃5</div>
+					<div class="min_mx" >55英寸活动中6</div>
+				</div>
+                    <form  id="cart_form" action="addCart" method="post">
+                        <div class="clear" style="margin-top:20px;">
+                            <div class="min_t" style="line-height:36px">数量：</div>
+                            <div style="height: 40px">
+                                <input id="num" type="number" name="number" value="1" min="1" style="width:40px;height: 25px;margin-bottom: 10px;text-align:center">
+                            </div>
+                        </div>
+                        <div class="clear" style="margin-top:20px;">
+                            <input type="hidden" name="skuName" th:value="${skuVO.name}" />
+                            <input type="hidden" name="unitPrice" th:value="${skuVO.price}" />
+                            <input type="hidden" name="productId" th:value="${skuVO.spu.id}" />
+                            <input type="hidden" name="skuId" th:value="${skuVO.id}" />
+                            <input type="hidden" name="productPic" th:value="${skuVO.spu.pic}" />
+                            <input type="hidden" name="status" th:value="1" />
+                            <input type="hidden" name="address" th:value="${skuVO.address}" />
+                            <div th:if="${session.user!=null}">
+                                <input type="hidden" name="userId" th:value="${session.user.id}" />
+                            </div>
+                            <img th:src="@{/images/shop.jpg}" onclick="cart_submit()" alt="" style="cursor:pointer;">
+                        </div>
+                    </form>
+			</div>
+		</div>
+            </div>
+        </div>
+	</div>
+	<div class="Dbox1">
+		<div class="boxbottom">
+			<div class="top">
+				<span>商品详情</span>
+
+
+				<span>评价</span>
+			</div>
+			<div class="btm">
+				<p th:text="${skuVO.spu.describes}"></p>
+				<div th:each="image:${skuVO.imageList}" style="float: left">
+					<img th:src="@{'/upload/image/'+${image.url}}" height="200px"/>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

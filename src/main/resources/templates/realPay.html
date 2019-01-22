@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
+	$(function (){$("#a").submit();});
+</script>
+<title>硅谷商城</title>
+</head>
+<body>
+	<form id="a" action="http://localhost:8080/payservice/payment"  method="POST" target="_blank">
+		<input type="hidden" name="trade_no" id="out_trade_no" value="硅谷商城订单<%=ran%>">
+		<input type="hidden" name="total_fee" value="0.01">
+		<input type="hidden" name="busi_return_url" value="http://localhost:8080/t_mall_sale/order_success.do">
+		<input type="hidden" name="busi_notify_url" value="http://localhost:8080/t_mall_sale/real_pay_success.do">
+		<input type="hidden" name="subject" value="支付测试专用">
+		<input type="hidden" name="body" value="即时到账测试">
+	</form>
+</body>
+</html>

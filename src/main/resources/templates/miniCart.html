@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
+
+</script>
+<title>硅谷商城</title>
+</head>
+<body>
+<div th:fragment="cart">
+	 <div class="card" >
+			<a href="listCart" onmouseout="hideCart()" onmouseover="showCart()" target="_blank">购物车<div id="mimiNum" class="num">0</div></a>
+			<!--购物车商品-->
+			<div id="cartList" class="cart_pro" style="display:none;">
+				<div th:include="miniCartList::cartList"></div>
+			</div>
+		</div>
+</div>
+</body>
+</html>

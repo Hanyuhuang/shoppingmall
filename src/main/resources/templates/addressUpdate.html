@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script type="text/javascript" th:src="@{/js/jquery-1.7.2.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/css.css}">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>修改地址</title>
+</head>
+<body>
+<div th:include="header::top"></div>
+<div class="top_img">
+    <img th:src="@{/images/top_img.jpg}" alt="">
+</div>
+<div class="Cbox">
+<form class="form-horizontal" action="updateAddress" method="post">
+    <input type="hidden" name="id" th:value="${address.id}">
+    <div class="form-group">
+        <label for="name" class="col-sm-4 control-label">收货人</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="name" name="recipient" th:value="${address.recipient}"
+                   placeholder="收货人" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="tel" class="col-sm-4 control-label">联系方式</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="tel" name="tel" th:value="${address.tel}"
+                   placeholder="联系方式" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="address" class="col-sm-4 control-label">收货地址</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="address" name="name" th:value="${address.name}"
+                   placeholder="收货地址" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-10">
+            <button type="submit" class="btn btn-primary">修改</button>
+            <a class="btn btn-danger" href="listAddress">返回</a>
+        </div>
+    </div>
+</form>
+</div>
+</body>
+</html>

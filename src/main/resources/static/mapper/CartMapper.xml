@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hyh.shoppingmall.mapper.CartMapper">
+
+	<select id="countCart" parameterType="User" resultType="int">
+		select count(*) from cart where user_id=#{id}
+	</select>
+	<select id="checkCart" parameterType="Cart" resultType="int">
+		select count(1) from cart where sku_id = #{skuId}
+	</select>
+
+	<select id="listCart" parameterType="Map" resultType="Cart">
+		select * from cart where user_id = #{user.id} order by create_time desc limit ${startIndex},${pageSize}
+	</select>
+
+	<select id="listCheckedCart" parameterType="User" resultType="Cart">
+		select * from cart where user_id = #{id} and status = '1' order by create_time desc limit 0,5
+	</select>
+
+	<insert id="addCart" useGeneratedKeys="true" keyColumn="id"
+		keyProperty="id" parameterType="Cart">
+		insert into
+		cart(
+		sku_name,
+		unit_price,
+		number,
+		total_price,
+		user_id,
+		product_id,
+		sku_id,
+		product_pic,
+		address
+		)
+		values
+		(
+		#{skuName},
+		#{unitPrice},
+		#{number},
+		#{totalPrice},
+		#{userId},
+		#{productId},
+		#{skuId},
+		#{productPic},
+		#{address}
+		)
+	</insert>
+
+	<update id="updateCart" parameterType="Cart">
+		update cart
+		<set>
+			<if test="number!=0">
+				number = #{number},
+			</if>
+			<if test="totalPrice!=0">
+				total_price =#{totalPrice},
+			</if>
+			<if test="status!=null and status!=''">
+				status = #{status},
+			</if>
+		</set>
+		where sku_id = #{skuId} and user_id = #{userId}
+	</update>
+	<update id="updateAddCart" parameterType="Cart">
+		update cart
+		<set>
+			<if test="number!=0">
+				number = number+#{number},
+			</if>
+			<if test="totalPrice!=0">
+				total_price =total_price+ #{totalPrice},
+			</if>
+			<if test="status!=null and status!=''">
+				status = #{status},
+			</if>
+		</set>
+		where sku_id = #{skuId} and user_id = #{userId}
+	</update>
+
+	<delete id="deleteCart" parameterType="Cart">
+		delete from cart where sku_id=#{skuId}
+	</delete>
+
+</mapper>

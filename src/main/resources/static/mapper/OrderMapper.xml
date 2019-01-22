@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hyh.shoppingmall.mapper.OrderMapper">
+
+
+	<delete id="deleteCart" parameterType="Map">
+		delete from cart where id in
+		<foreach collection="cartList" item="cart" separator="," open="(" close=")">
+			#{cart.id}
+		</foreach>
+	</delete>
+
+	<insert id="saveOrder" useGeneratedKeys="true" keyColumn="id" keyProperty="id"  parameterType="Order">
+		insert into orders(
+		user_id,
+		price,
+		recipient,
+		address
+		)
+		values(
+		#{userId},
+		#{price},
+		#{recipient},
+		#{address}
+		)
+	</insert>
+
+
+	<insert id="saveOrderDetail" parameterType="Map">
+		insert into
+		order_info(
+		order_id,
+		sku_id,
+		sku_name,
+		sku_price,
+		sku_number,
+		sku_address
+		)
+		values
+		<foreach collection="orderDetailList" item="orderDetail" separator="," >
+			(
+			#{orderDetail.orderId},
+			#{orderDetail.skuId},
+			#{orderDetail.skuName},
+			#{orderDetail.skuPrice},
+			#{orderDetail.skuNumber},
+			#{orderDetail.skuAddress}
+			)
+		</foreach>
+	</insert>
+
+</mapper>
